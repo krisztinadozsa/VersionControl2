@@ -17,5 +17,5 @@ namespace UserMaintenance.Entities
 
     }
 
-    }
+    
 }

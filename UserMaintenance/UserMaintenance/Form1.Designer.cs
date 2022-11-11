@@ -32,6 +32,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.lblFullName = new System.Windows.Forms.Label();
             this.txtFullName = new System.Windows.Forms.TextBox();
+            this.btnFajlbairas = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listUsers
@@ -68,11 +69,22 @@
             this.txtFullName.Size = new System.Drawing.Size(188, 20);
             this.txtFullName.TabIndex = 7;
             // 
+            // btnFajlbairas
+            // 
+            this.btnFajlbairas.Location = new System.Drawing.Point(270, 249);
+            this.btnFajlbairas.Name = "btnFajlbairas";
+            this.btnFajlbairas.Size = new System.Drawing.Size(235, 23);
+            this.btnFajlbairas.TabIndex = 8;
+            this.btnFajlbairas.Text = "button1";
+            this.btnFajlbairas.UseVisualStyleBackColor = true;
+            this.btnFajlbairas.Click += new System.EventHandler(this.btnFajlbairas_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnFajlbairas);
             this.Controls.Add(this.txtFullName);
             this.Controls.Add(this.lblFullName);
             this.Controls.Add(this.btnAdd);
@@ -91,6 +103,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label lblFullName;
         private System.Windows.Forms.TextBox txtFullName;
+        private System.Windows.Forms.Button btnFajlbairas;
     }
 }
 
