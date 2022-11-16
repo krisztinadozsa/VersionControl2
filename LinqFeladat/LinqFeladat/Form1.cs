@@ -14,6 +14,8 @@ namespace LinqFeladat
     public partial class Form1 : Form
     {
         private List<Country> countries = new List<Country>();
+
+        private List<Ramen> ramens = new List<Ramen>();
         public Form1()
         {
             InitializeComponent();
@@ -29,23 +31,46 @@ namespace LinqFeladat
                 {
                     var line = sr.ReadLine().Split(',');
                     var countryName = line[2];
-                    var currentCountry = (from x in countries
-                                          where x.Name.Equals(countryName)
-                                          select x).FirstOrDefault();
+                    var country = AddCountry(countryName);
 
-                    if (currentCountry == null)
+                    var ramen = new Ramen()
                     {
-                        currentCountry = new Country()
-                        {
-                            ID = countries.Count + 1,
-                            Name = countryName
+                        ID = ramens.Count + 1,
+                        Brand = line[0],
+                        Name = line[1],
+                        CountryFK = country.ID,
+                        Country = country,
+                        Stars = Convert.ToDouble(line[3])
+                    };
 
-                        };
+                    ramens.Add(ramen);
 
-                        countries.Add(currentCountry);
-                    }
+
+
+
                 }
             }
+        }
+
+        private Country AddCountry(string countryName)
+        {
+            var currentCountry = (from x in countries
+                                  where x.Name.Equals(countryName)
+                                  select x).FirstOrDefault();
+
+            if (currentCountry == null)
+            {
+                currentCountry = new Country()
+                {
+                    ID = countries.Count + 1,
+                    Name = countryName
+
+                };
+
+                countries.Add(currentCountry);
+            }
+
+            return currentCountry;
         }
 
         private void Form1_Load(object sender, EventArgs e)
