@@ -42,7 +42,7 @@ namespace LinqFeladat
                 while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine().Split(',');
-                    var countryName = line[1];
+                    var countryName = line[2];
                     var country = AddCountry(countryName);
 
                     var ramen = new Ramen()
@@ -93,6 +93,31 @@ namespace LinqFeladat
         private void textCountries_TextChanged(object sender, EventArgs e)
         {
             GetCountries();
+        }
+
+        private void listCountries_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var country = (Country)((ListBox)sender).SelectedItem;
+            if (country == null)
+                return;
+
+            var countryRamens = from r in ramens
+                                where r.CountryFK == country.ID
+                                select r;
+
+            var groupedRamens = from r in countryRamens
+                                group r.Stars by r.Brand into g
+                                select new
+                                {
+                                    BrandName = g.Key,
+                                    AverageRating = Math.Round(g.Average(), 2)
+                                };
+
+            var orderedGroups = from g in groupedRamens
+                                orderby g.AverageRating descending
+                                select g;
+
+            dataGridView1.DataSource = orderedGroups.ToList();
         }
     }
 }

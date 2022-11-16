@@ -49,6 +49,7 @@
             this.listCountries.Name = "listCountries";
             this.listCountries.Size = new System.Drawing.Size(157, 290);
             this.listCountries.TabIndex = 1;
+            this.listCountries.SelectedIndexChanged += new System.EventHandler(this.listCountries_SelectedIndexChanged);
             // 
             // dataGridView1
             // 
