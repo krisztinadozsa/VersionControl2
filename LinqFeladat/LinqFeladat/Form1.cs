@@ -20,6 +20,18 @@ namespace LinqFeladat
         {
             InitializeComponent();
             LoadData("ramen.csv");
+
+            listCountries.DisplayMember = "Name";
+            GetCountries();
+        }
+
+        private void GetCountries()
+        {
+            var countriesList = from y in countries
+                                where y.Name.Contains(textCountries.Text)
+                                orderby y.Name
+                                select y;
+            listCountries.DataSource = countriesList.ToList();
         }
 
         private void LoadData(string fileName)
@@ -30,7 +42,7 @@ namespace LinqFeladat
                 while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine().Split(',');
-                    var countryName = line[2];
+                    var countryName = line[1];
                     var country = AddCountry(countryName);
 
                     var ramen = new Ramen()
@@ -76,6 +88,11 @@ namespace LinqFeladat
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void textCountries_TextChanged(object sender, EventArgs e)
+        {
+            GetCountries();
         }
     }
 }
