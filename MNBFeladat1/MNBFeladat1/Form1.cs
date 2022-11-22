@@ -20,10 +20,19 @@ namespace MNBFeladat1
         public Form1()
         {
             InitializeComponent();
+            RefreshData();
+
+            
+        }
+
+        private void RefreshData()
+        {
+            if (cbValuta.SelectedItem == null) return;
+
+            _rates.Clear();
             getRates();
             loadXml(getRates());
             dataGridView1.DataSource = _rates;
-
             makeChart();
         }
 
@@ -66,19 +75,27 @@ namespace MNBFeladat1
 
         private string getRates()
         {
+            
             var mnbService = new MNBArfolyamServiceSoapClient();
             GetExchangeRatesRequestBody req = new GetExchangeRatesRequestBody();
-            req.currencyNames = "EUR";
-            req.startDate = "2020-01-01";
-            req.endDate = "2020-06-30";
+            req.currencyNames = cbValuta.SelectedItem.ToString(); // "EUR";
+            req.startDate = tolPicker.Value.ToString("yyyy-MM-dd"); // 2020-01-01";
+            req.endDate = igPicker.Value.ToString("yyyy-MM-dd"); // "2020-06-30";
             var response = mnbService.GetExchangeRates(req);
             return response.GetExchangeRatesResult;
 
         }
 
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void osszChanged(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
