@@ -17,10 +17,42 @@ namespace LakaspiacExcel
     {
         List<Flat> Flats;
         RealEstateEntities context = new RealEstateEntities();
+
+        Excel.Application xlApp;
+        Excel.Workbook xlWb;
+        Excel.Worksheet xlSheet;
+
         public Form1()
         {
             InitializeComponent();
             LoadData();
+            CreateExcel();
+        }
+
+        private void CreateExcel()
+        {
+            try
+            {
+
+                xlApp = new Excel.Application();
+                xlWb = xlApp.Workbooks.Add();
+                xlSheet = xlWb.ActiveSheet;
+
+                //CreateTable();
+
+                xlApp.Visible = true;
+                xlApp.UserControl = true;
+            }
+            catch (Exception ex)
+            {
+                string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
+                MessageBox.Show(errMsg);
+
+                xlWb.Close(false, Type.Missing, Type.Missing);
+                xlApp.Quit();
+                xlWb = null;
+                xlApp = null;
+            }
         }
 
         private void LoadData()
