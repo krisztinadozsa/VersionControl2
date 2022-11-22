@@ -1,4 +1,5 @@
-﻿using MNBFeladat1.MNBServiceReference1;
+﻿using MNBFeladat1.Entities1;
+using MNBFeladat1.MNBServiceReference1;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +14,12 @@ namespace MNBFeladat1
 {
     public partial class Form1 : Form
     {
-
+        BindingList<RateData> _rates;
         public Form1()
         {
             InitializeComponent();
             getRates();
+            dataGridView1.DataSource = _rates;
         }
 
         private void getRates()
