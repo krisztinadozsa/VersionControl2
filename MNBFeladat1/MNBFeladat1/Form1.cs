@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 
 namespace MNBFeladat1
@@ -22,6 +23,27 @@ namespace MNBFeladat1
             getRates();
             loadXml(getRates());
             dataGridView1.DataSource = _rates;
+
+            makeChart();
+        }
+
+        private void makeChart()
+        {
+            chartRateData.DataSource = _rates;
+            Series sorozatok = chartRateData.Series[0];
+            sorozatok.ChartType = SeriesChartType.Line;
+            sorozatok.XValueMember = "Date";
+            sorozatok.YValueMembers = "value";
+            sorozatok.BorderWidth = 2;
+
+            var jelmagyarazat = chartRateData.Legends[0];
+            jelmagyarazat.Enabled = false;
+
+            var diagarmterulet = chartRateData.ChartAreas[0];
+            diagarmterulet.AxisY.IsStartedFromZero = false;
+            diagarmterulet.AxisY.MajorGrid.Enabled = false;
+            diagarmterulet.AxisX.MajorGrid.Enabled = false;
+
         }
 
         private void loadXml(string xmlstring)
