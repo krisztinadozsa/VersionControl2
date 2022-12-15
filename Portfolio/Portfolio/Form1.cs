@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Portfolio
         PortfolioEntities context = new PortfolioEntities();
         List<Tick> ticks;
         List<PortfolioItem> Portfolio = new List<PortfolioItem>();
+        List<decimal> Nyereségek;
         public Form1()
         {
             InitializeComponent();
@@ -24,7 +26,7 @@ namespace Portfolio
 
             CreatePortfolio();
 
-            List<decimal> Nyereségek = new List<decimal>();
+            Nyereségek = new List<decimal>();
             int intervalum = 30;
             DateTime kezdőDátum = (from x in ticks select x.TradingDay).Min();
             DateTime záróDátum = new DateTime(2016, 12, 30);
@@ -72,6 +74,23 @@ namespace Portfolio
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnMent_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                {
+                    int counter = 1;
+                    foreach (decimal item in Nyereségek)
+                    {
+                        sw.WriteLine(string.Format("{0};{1}", counter, item));
+                    }
+                }
+                
+            }
         }
     }
 }
